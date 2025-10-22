@@ -1,23 +1,58 @@
-# my_app
+# My App
 
-A new Flutter project.
+A Flutter application designed for cross-platform development.
 
-## Getting Started
-For live development (to use Flutter’s hot reload shortcut), start it in interactive mode:
+## Development Environment
 
-docker compose run --service-ports flutter bash
-Then, once you’re inside the container:
-flutter pub get
-flutter run -d web-server --web-port=8080 --web-hostname=0.0.0.0
+This project uses Docker to provide a consistent development environment across all platforms.
 
-This project is a starting point for a Flutter application.
+### Prerequisites
 
-A few resources to get you started if this is your first Flutter project:
+- Docker
+- Docker Compose
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Running the Application
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+#### Development Mode with Hot Reload
+
+For the best development experience with Flutter's hot reload functionality:
+
+1. Start the Docker container in interactive mode:
+```bash
+   docker compose run --service-ports flutter bash
+```
+
+2. Inside the container, install dependencies:
+```bash
+   flutter pub get
+```
+
+3. Launch the application:
+```bash
+   flutter run -d web-server --web-port=8080 --web-hostname=0.0.0.0
+```
+
+The application will be accessible at `http://localhost:8080`
+
+## Project Structure
+
+This project follows Flutter's standard application structure. For more information about organizing your Flutter project, refer to the [official documentation](https://docs.flutter.dev/).
+
+## Resources
+
+### New to Flutter?
+
+- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab) - Step-by-step tutorial
+- [Flutter Cookbook](https://docs.flutter.dev/cookbook) - Practical code samples
+- [Flutter Documentation](https://docs.flutter.dev/) - Comprehensive guides and API reference
+
+## Contributing
+
+[Add your contribution guidelines here]
+
+## License
+
+[Add your license information here]
+
+
 
