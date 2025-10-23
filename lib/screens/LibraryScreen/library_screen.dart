@@ -18,16 +18,21 @@ class LibraryPage extends StatelessWidget {
     ];
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 33, 107, 235),
         centerTitle: true,
         title: const Text(
           "Library",
           style: TextStyle(
-            color: Colors.white,
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
+            fontSize: 28,
+            fontWeight: FontWeight.w600,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.filter_list),
+            tooltip: 'Filter',
+          ),
+        ],
       ),
       body: Expanded(
         child: GridView.builder(
