@@ -17,16 +17,8 @@ class _DetailsPageState extends State<DetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 33, 107, 235),
         centerTitle: true,
-        title: Text(
-          widget.book.name,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        title: Text(widget.book.name),
       ),
       body: ListView(
         children: [
@@ -95,13 +87,8 @@ class _DetailsPageState extends State<DetailsPage> {
             padding: const EdgeInsets.all(16.0),
             child: SizedBox(
               width: double.infinity,
-              child: ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey[300],
-                  foregroundColor: Colors.black,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                ),
-              onPressed: () {
+              child: FilledButton.icon(
+                onPressed: () {
                 setState(() {
                   if (quantity > 0) {
                     quantity--;
@@ -120,15 +107,9 @@ class _DetailsPageState extends State<DetailsPage> {
                     );
                   }
                 });
-              },
+                },
                 icon: const Icon(Icons.shopping_bag),
-                label: const Text(
-                  "Purchase",
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                label: const Text("Purchase"),
               ),
             ),
           ),
