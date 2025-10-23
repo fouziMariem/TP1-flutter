@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import '../models/book.dart';
+
 class HomeCell extends StatelessWidget {
   final Book book;
-  const HomeCell(this.book,{super.key});
+  const HomeCell(this.book, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,21 +15,30 @@ class HomeCell extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(15),
-              child: Image.asset(book.image, width: 100),
+              child: Image.asset(
+                book.image,
+                width: 100,
+              ),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(book.name,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold)),
-                Text("${book.price}TND",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold)),
+                Text(
+                  book.name,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  "${book.price}TND",
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ],
             ),
           ],

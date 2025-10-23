@@ -1,7 +1,7 @@
 class Book {
-  String name;
-  int price;
-  String image;
+  final String name;
+  final int price;
+  final String image;
 
-  Book(this.name, this.price, this.image);
+  const Book(this.name, this.price, this.image);
 }
