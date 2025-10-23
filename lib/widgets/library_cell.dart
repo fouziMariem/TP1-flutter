@@ -24,7 +24,7 @@ class LibraryCell extends StatelessWidget {
                 child: Image.asset(
                   book.image,
                   width: double.infinity,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                 ),
               ),
             ),
