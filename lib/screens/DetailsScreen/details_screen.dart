@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import '../../models/book.dart';
 
 class DetailsPage extends StatefulWidget {
-  final Book book;
-  
-  const DetailsPage({super.key, required this.book});
+  const DetailsPage({super.key});
 
   @override
   State<DetailsPage> createState() => _DetailsPageState();
@@ -15,12 +13,14 @@ class _DetailsPageState extends State<DetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final book = ModalRoute.of(context)!.settings.arguments as Book;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 33, 107, 235),
         centerTitle: true,
         title: Text(
-          widget.book.name,
+          book.name,
           style: const TextStyle(
             color: Colors.white,
             fontSize: 24,
@@ -37,7 +37,7 @@ class _DetailsPageState extends State<DetailsPage> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: Image.asset(
-                  widget.book.image,
+                  book.image,
                   width: 250,
                   height: 300,
                   fit: BoxFit.cover,
@@ -64,7 +64,7 @@ class _DetailsPageState extends State<DetailsPage> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "${widget.book.price.toString()} TND",
+                "${book.price.toString()} TND",
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -107,7 +107,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     quantity--;
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('${widget.book.name} purchased! Available: $quantity'),
+                        content: Text('${book.name} purchased! Available: $quantity'),
                         backgroundColor: Colors.green,
                       ),
                     );

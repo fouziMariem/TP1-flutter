@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../widgets/home_cell.dart';
 import '../../models/book.dart';
-import '../DetailsScreen/details_screen.dart';
+import '../../main.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -31,11 +31,10 @@ class HomePage extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              Navigator.push(
+              Navigator.pushNamed(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => DetailsPage(book: bookData[index]),
-                ),
+                AppRoutes.details,
+                arguments: bookData[index],
               );
             },
             child: HomeCell(bookData[index]),
