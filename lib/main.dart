@@ -1,8 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+
 import 'screens/HomeScreen/home_screen.dart';
 import 'screens/LibraryScreen/library_screen.dart';
+import 'screens/BasketScreen/basket_screen.dart';
 
 void main() {
+  if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+  }
+
   runApp(const MyApp());
 }
 
@@ -31,7 +41,11 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = [const HomePage(), const LibraryPage()];
+  final List<Widget> _screens = [
+    const HomePage(),
+    const LibraryPage(),
+    const BasketScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +63,10 @@ class _MainPageState extends State<MainPage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.library_books),
             label: 'Library',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
+            label: 'Basket',
           ),
         ],
       ),

@@ -29,30 +29,28 @@ class LibraryPage extends StatelessWidget {
           ),
         ),
       ),
-      body: Expanded(
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 0.7,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-          ),
-          padding: const EdgeInsets.all(16),
-          itemCount: books.length,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => DetailsPage(book: books[index]),
-                  ),
-                );
-              },
-              child: LibraryCell(books[index]),
-            );
-          },
+      body: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 0.7,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
         ),
+        padding: const EdgeInsets.all(16),
+        itemCount: books.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailsPage(book: books[index]),
+                ),
+              );
+            },
+            child: LibraryCell(books[index]),
+          );
+        },
       ),
     );
   }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../models/book.dart';
+import '../../models/user.dart';
+import '../../services/book_service.dart';
+import '../../services/user_service.dart';
 
 class DetailsPage extends StatefulWidget {
   final Book book;
-  
+
   const DetailsPage({super.key, required this.book});
 
   @override
@@ -11,7 +14,7 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<DetailsPage> {
-  int quantity = 10; // Global variable for quantity
+  int quantity = 10;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,6 @@ class _DetailsPageState extends State<DetailsPage> {
       ),
       body: ListView(
         children: [
-          // Image
           Center(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -45,21 +47,14 @@ class _DetailsPageState extends State<DetailsPage> {
               ),
             ),
           ),
-          
-          // Description
           const Padding(
             padding: EdgeInsets.all(16.0),
             child: Text(
               "Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue.",
               textAlign: TextAlign.justify,
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             ),
           ),
-          
-          // Price
           Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -72,8 +67,6 @@ class _DetailsPageState extends State<DetailsPage> {
               ),
             ),
           ),
-          
-          // Quantity display
           Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -87,10 +80,7 @@ class _DetailsPageState extends State<DetailsPage> {
               ),
             ),
           ),
-          
           const SizedBox(height: 20),
-          
-          // Buy button
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: SizedBox(
@@ -101,38 +91,56 @@ class _DetailsPageState extends State<DetailsPage> {
                   foregroundColor: Colors.black,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
-              onPressed: () {
-                setState(() {
-                  if (quantity > 0) {
-                    quantity--;
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('${widget.book.name} purchased! Available: $quantity'),
-                        backgroundColor: Colors.green,
-                      ),
-                    );
-                  } else {
+                onPressed: () async {
+                  if (quantity <= 0) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('Out of stock!'),
                         backgroundColor: Colors.red,
                       ),
                     );
+                    return;
                   }
-                });
-              },
+
+                  UserService userService = UserService();
+                  User? currentUser = await userService.getCurrentUser();
+
+                  if (currentUser != null && currentUser.email.isNotEmpty) {
+                    BookService bookService = BookService();
+                    await bookService.insertBook(
+                      widget.book,
+                      currentUser.email,
+                    );
+
+                    setState(() {
+                      quantity--;
+                    });
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          '${widget.book.name} purchased! Remaining: $quantity',
+                        ),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Please configure your profile first!"),
+                        backgroundColor: Colors.orange,
+                      ),
+                    );
+                  }
+                },
                 icon: const Icon(Icons.shopping_bag),
                 label: const Text(
                   "Purchase",
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
           ),
-          
           const SizedBox(height: 20),
         ],
       ),
