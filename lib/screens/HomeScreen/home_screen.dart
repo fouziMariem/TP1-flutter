@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/screens/ProfileScreen/profile_screen.dart';
 import '../../widgets/home_cell.dart';
 import '../../models/book.dart';
 import '../DetailsScreen/details_screen.dart';
@@ -17,6 +18,15 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 33, 107, 235),
         centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.person, color: Colors.white),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ProfileScreen()),
+            );
+          },
+        ),
         title: const Text(
           "Store INSAT",
           style: TextStyle(

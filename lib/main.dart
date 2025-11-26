@@ -31,10 +31,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = [
-    const HomePage(),
-    const LibraryPage(),
-  ];
+  final List<Widget> _screens = [const HomePage(), const LibraryPage()];
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +45,7 @@ class _MainPageState extends State<MainPage> {
           });
         },
         items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
             icon: Icon(Icons.library_books),
             label: 'Library',
