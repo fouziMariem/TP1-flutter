@@ -13,22 +13,29 @@ class AppRoutes {
 }
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool isDark = false;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Book Store App',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
+      theme: isDark ? ThemeData.dark() : ThemeData.light(),
       initialRoute: AppRoutes.main,
       routes: {
-        AppRoutes.main: (context) => const MainPage(),
+        AppRoutes.main: (context) => MainPage(
+              onToggleTheme: () {
+                setState(() => isDark = !isDark);
+              },
+            ),
         AppRoutes.home: (context) => const HomePage(),
         AppRoutes.library: (context) => const LibraryPage(),
         AppRoutes.basket: (context) => const BasketPage(),
@@ -37,8 +44,11 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  final VoidCallback onToggleTheme;
+
+  const MainPage({required this.onToggleTheme, super.key});
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -61,40 +71,35 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
     tabController = TabController(length: pages.length, vsync: this);
   }
 
-  void _toggleNavigationMode() {
-    setState(() {
-      useTabBar = !useTabBar;
-    });
-    Navigator.of(context).pop(); // close the drawer
-  }
-
   @override
   void dispose() {
     tabController.dispose();
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: CustomDrawer(
         useTabBar: useTabBar,
-        onToggle: _toggleNavigationMode,
+        onToggle: () {
+          setState(() {
+            useTabBar = !useTabBar;
+          });
+        },
       ),
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 33, 107, 235),
-        title: const Text(
-          "Store INSAT",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
+        title: const Text("Store INSAT"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.brightness_6),
+            onPressed: widget.onToggleTheme,
           ),
-        ),
+        ],
         bottom: useTabBar
             ? TabBar(
                 controller: tabController,
-                labelColor: Colors.white,
                 tabs: const [
                   Tab(icon: Icon(Icons.home_outlined), text: "Home"),
                   Tab(icon: Icon(Icons.bookmark_outline), text: "Library"),
@@ -103,13 +108,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
               )
             : null,
       ),
-      body: useTabBar
-          ? TabBarView(
-              controller: tabController,
-              children: pages,
-            )
-          : pages[bottomNavIndex],
-      bottomNavigationBar: useTabBar
+body: useTabBar ? TabBarView( controller: tabController, children: pages, ) : pages[bottomNavIndex],      bottomNavigationBar: useTabBar
           ? null
           : BottomNavigationBar(
               currentIndex: bottomNavIndex,
@@ -120,22 +119,17 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
               },
               items: const [
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.home_outlined),
-                  label: "Home",
-                ),
+                    icon: Icon(Icons.home_outlined), label: "Home"),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.bookmark_outline),
-                  label: "Library",
-                ),
+                    icon: Icon(Icons.bookmark_outline), label: "Library"),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.shopping_basket),
-                  label: "Basket",
-                ),
+                    icon: Icon(Icons.shopping_basket), label: "Basket"),
               ],
             ),
     );
   }
 }
+
 
 class CustomDrawer extends StatelessWidget {
   final bool useTabBar;
