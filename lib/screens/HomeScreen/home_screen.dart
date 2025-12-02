@@ -14,18 +14,7 @@ class HomePage extends StatelessWidget {
       const Book("The little prince", 25, "assets/book3.png"),
     ];
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 33, 107, 235),
-        centerTitle: true,
-        title: const Text(
-          "Store INSAT",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
+      
       body: ListView.builder(
         itemCount: bookData.length,
         itemBuilder: (context, index) {

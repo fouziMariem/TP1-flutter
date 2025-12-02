@@ -17,18 +17,7 @@ class LibraryPage extends StatelessWidget {
       const Book("Pride and Prejudice", 38, "assets/book3.png"),
     ];
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 33, 107, 235),
-        centerTitle: true,
-        title: const Text(
-          "Library",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
+      
       body: Expanded(
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
