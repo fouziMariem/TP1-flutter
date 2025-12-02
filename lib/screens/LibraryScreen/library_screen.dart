@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../widgets/library_cell.dart';
 import '../../models/book.dart';
-import '../DetailsScreen/details_screen.dart';
+import '../../main.dart';
 
 class LibraryPage extends StatelessWidget {
   const LibraryPage({super.key});
@@ -17,18 +17,7 @@ class LibraryPage extends StatelessWidget {
       const Book("Pride and Prejudice", 38, "assets/book3.png"),
     ];
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 33, 107, 235),
-        centerTitle: true,
-        title: const Text(
-          "Library",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
+
       body: Expanded(
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -42,11 +31,10 @@ class LibraryPage extends StatelessWidget {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                Navigator.push(
+                Navigator.pushNamed(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => DetailsPage(book: books[index]),
-                  ),
+                  AppRoutes.details,
+                  arguments: books[index],
                 );
               },
               child: LibraryCell(books[index]),
