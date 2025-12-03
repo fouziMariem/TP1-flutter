@@ -56,13 +56,77 @@ class _BasketScreenState extends State<BasketScreen> {
                 return ListView.builder(
                   itemCount: books.length,
                   itemBuilder: (context, index) {
+                    final book = books[index];
                     return Dismissible(
-                      key: Key(books[index].id.toString()),
+                      key: Key('${book.name}_${book.id}'),
                       onDismissed: (direction) async {
-                        await _bookService.deleteBook(books[index].id!);
+                        User? user = await _userService.getCurrentUser();
+                        if (user != null) {
+                          await _bookService.decrementBookQuantity(
+                            book.name,
+                            user.email,
+                          );
+                          _loadData();
+                        }
                       },
                       background: Container(color: Colors.red),
-                      child: HomeCell(books[index]),
+                      child: Card(
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                child: Image.asset(
+                                  book.image,
+                                  width: 100,
+                                ),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    book.name,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    "${book.price}TND",
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 8),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                      vertical: 4,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.blue,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Text(
+                                      "Quantity: ${book.quantity}",
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     );
                   },
                 );
